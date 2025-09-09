@@ -1,0 +1,103 @@
+Below is a ready-to-use Markdown file (`solution.md`) set up for Pandoc. Save the text into `solution.md`, then run the Pandoc command shown below. Pandoc will convert both your headings and LaTeX math into a formatted Word document.
+
+---
+
+**Contents of solution.md**  
+```markdown
+# Example
+
+Let $Y_{1},Y_{2},\dots,Y_{n}$ denote a random sample from the uniform distribution on the interval $(0,\theta)$. Two unbiased estimators for $\theta$ are
+
+$$
+\hat{\theta}_1 \;=\; 2\,\overline{Y}
+\quad\text{and}\quad
+\hat{\theta}_2 \;=\;\frac{n+1}{n}\,Y_{(n)},
+$$
+
+where
+$$
+\overline{Y}=\frac{1}{n}\sum_{i=1}^n Y_i
+\quad\text{and}\quad
+Y_{(n)}=\max\{Y_1,Y_2,\dots,Y_n\}.
+$$
+
+Find the efficiency of $\hat{\theta}_1$ relative to $\hat{\theta}_2$.
+
+---
+
+## Solution
+
+1. **Mean and variance of each $Y_i$.**  
+   Since $Y_i\sim\mathrm{Uniform}(0,\theta)$,
+   $$
+     \mathbb{E}[Y_i]
+     =\frac{\theta}{2},
+     \qquad
+     \mathrm{Var}(Y_i)
+     =\frac{\theta^2}{12}.
+   $$
+
+2. **Estimator $\hat{\theta}_1 = 2\,\overline{Y}$.**  
+   - Unbiasedness:
+     $$
+       \mathbb{E}[\hat{\theta}_1]
+       =2\,\mathbb{E}[\overline{Y}]
+       =2\cdot\frac{\theta}{2}
+       =\theta.
+     $$
+   - Variance:
+     $$
+       \mathrm{Var}(\hat{\theta}_1)
+       =4\,\mathrm{Var}(\overline{Y})
+       =4\,\frac{\theta^2/12}{n}
+       =\frac{\theta^2}{3n}.
+     $$
+
+3. **Estimator $\hat{\theta}_2 = \tfrac{n+1}{n}\,Y_{(n)}$.**  
+   The pdf of the maximum $Y_{(n)}$ is
+   $$
+     g_{(n)}(y)
+     =n\Bigl(\frac{y}{\theta}\Bigr)^{n-1}\frac{1}{\theta},
+     \quad 0\le y\le\theta.
+   $$
+   - Mean:
+     $$
+       \mathbb{E}[Y_{(n)}]
+       =\frac{n}{n+1}\,\theta.
+     $$
+   - Unbiasedness of $\hat{\theta}_2$:
+     $$
+       \mathbb{E}[\hat{\theta}_2]
+       =\frac{n+1}{n}\,\frac{n}{n+1}\,\theta
+       =\theta.
+     $$
+   - Variance:
+     $$
+       \mathrm{Var}(\hat{\theta}_2)
+       =\Bigl(\frac{n+1}{n}\Bigr)^2
+         \,\frac{n\,\theta^2}{(n+2)(n+1)^2}
+       =\frac{\theta^2}{n(n+2)}.
+     $$
+
+4. **Relative efficiency.**  
+   $$
+     \mathrm{eff}(\hat{\theta}_1,\hat{\theta}_2)
+     =\frac{\mathrm{Var}(\hat{\theta}_2)}{\mathrm{Var}(\hat{\theta}_1)}
+     =\frac{\theta^2/(n(n+2))}{\theta^2/(3n)}
+     =\frac{3}{n+2}.
+   $$
+
+Hence,
+$$
+\boxed{\mathrm{eff}(\hat{\theta}_1,\hat{\theta}_2)=\frac{3}{n+2}}.
+$$
+```
+
+---
+
+**Pandoc conversion command**  
+```bash
+pandoc solution.md -o solution.docx --mathjax
+```
+
+.
